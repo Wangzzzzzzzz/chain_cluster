@@ -103,6 +103,10 @@ def generate_dist_mat(fasta_Seq, dist_fun, dist_max, dist_unify_fun):
 def main():
     if not os.path.exists('./fasta_db'):
         os.mkdir('./fasta_db')
+
+    if not os.path.exists('./RES'):
+        os.mkdir('./RES')
+    
     skempi_v1 = obtain_seq('SKP1402m.ddg.txt', 'SKP1402m.seq.txt')
     write_to_fasta(skempi_v1, './fasta_db/skempi_v1.fasta')
     chain_name, dist_mat = generate_dist_mat(fasta_Seq='./fasta_db/skempi_v1.fasta',\
@@ -128,7 +132,7 @@ def main():
     
     # save the result
     result = pd.DataFrame({"Chain":chain_name,"label":Agg_cluster.labels_})
-    result.to_csv('./cluster_label.csv',index=False)
+    result.to_csv('./RES/cluster_label.csv',index=False)
     check_dict = {k:str(v) for k,v in zip(chain_name,Agg_cluster.labels_)}
 
     # read in the skempi_v1 dataset and add the additional column
@@ -139,7 +143,7 @@ def main():
     dataset['class'] = identifier_col
     print(dataset.head())
 
-    dataset.to_csv('./SKP1402m.ddg_class.txt',sep='\t',index=False,header=False)
+    dataset.to_csv('./RES/SKP1402m.ddg_class.txt',sep='\t',index=False,header=False)
 
 if __name__ == "__main__":
     main()
