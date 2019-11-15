@@ -117,8 +117,15 @@ def main():
     plt.colorbar()
     plt.show()
     
-    # cluster those that with identity > 25% together following the reviwer's comment
+    # To change linkage, specify linkage="complete" to linkage="single" or linkage="average"
+    # the difference in the linkage can be found at
+    # https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html, at comments of parameter linkage
+
+    # Now cluster those that with identity > 25% together following the reviwer's comment
     # you can also choose to specify n_cluster, but then distance_threshold will need to be None
+    # Just the uncomment the following two lines
+    # Agg_cluster = AgglomerativeClustering(n_clusters=65, affinity="precomputed",
+    #                                       linkage="complete", compute_full_tree=True, distance_threshold=None)
     Agg_cluster = AgglomerativeClustering(n_clusters=None, affinity="precomputed", \
                                           linkage="complete", compute_full_tree=True, distance_threshold=0.75)
     Agg_cluster.fit(dist_mat)
