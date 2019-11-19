@@ -1,6 +1,12 @@
 # Chain Cluster
 
 Cluster the chains in skempi v1 with agglomerative hierarchical clustering and blastp
+## Requirement
+Sklearn > version 2.1
+
+BioPython, Skbio
+
+Blast installed in PATH
 
 ## Version
 

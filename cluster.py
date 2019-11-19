@@ -107,9 +107,11 @@ def main():
     if not os.path.exists('./RES'):
         os.mkdir('./RES')
     
-    skempi_v1 = obtain_seq('SKP1402m.ddg.txt', 'SKP1402m.seq.txt')
-    write_to_fasta(skempi_v1, './fasta_db/skempi_v1.fasta')
-    chain_name, dist_mat = generate_dist_mat(fasta_Seq='./fasta_db/skempi_v1.fasta',\
+    # skempi_v1 = obtain_seq('SKP1402m.ddg.txt', 'SKP1402m.seq.txt')
+    skempi_v1 = obtain_seq('SKP1102s.ddg.txt', 'SKP1102s.seq.txt')
+
+    write_to_fasta(skempi_v1, './fasta_db/skempi_v1_SKP1102s.fasta')
+    chain_name, dist_mat = generate_dist_mat(fasta_Seq='./fasta_db/skempi_v1_SKP1102s.fasta',\
                                              dist_fun=dist_fun,dist_max=1,dist_unify_fun=min)
 
     # plot the distance matrix
@@ -139,18 +141,20 @@ def main():
     
     # save the result
     result = pd.DataFrame({"Chain":chain_name,"label":Agg_cluster.labels_})
-    result.to_csv('./RES/cluster_label.csv',index=False)
+    result.to_csv('./RES/SKP1102s_cluster_label.csv',index=False)
     check_dict = {k:str(v) for k,v in zip(chain_name,Agg_cluster.labels_)}
 
     # read in the skempi_v1 dataset and add the additional column
-    dataset = pd.read_csv('dataFile/SKP1402m.ddg.txt', sep='\t', header=None)
+    # dataset = pd.read_csv('dataFile/SKP1402m.ddg.txt', sep='\t', header=None)
+    dataset = pd.read_csv('dataFile/SKP1102s.ddg.txt', sep='\t', header=None)
+
     identifier_col = []
     for _, row in dataset.iterrows():
         identifier_col.append(label_obs(check_dict,row))
     dataset['class'] = identifier_col
     print(dataset.head())
 
-    dataset.to_csv('./RES/SKP1402m.ddg_class.txt',sep='\t',index=False,header=False)
+    dataset.to_csv('./RES/SKP1102s.ddg_class.txt',sep='\t',index=False,header=False)
 
 if __name__ == "__main__":
     main()
